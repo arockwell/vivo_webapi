@@ -1,3 +1,3 @@
 $:.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
 
-require 'vivo'
+require 'vivo_web_api'
