@@ -1,3 +1,6 @@
+require 'mechanize'
+require 'digest/md5'
+
 module VivoWebApi
   class Client
     class << self
