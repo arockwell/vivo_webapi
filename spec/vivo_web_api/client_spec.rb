@@ -51,5 +51,13 @@ LIMIT 20
       results = client.execute_sparql_construct(ENV['username'], ENV['password'], sparql)
       results.subjects.size.should == 20
     end
+
+    it "should not merge non-existent inviduals" do
+      client = Client.new(ENV['hostname'])
+      result = client.merge_individuals(ENV['username'], ENV['password'], 'a', 'b')
+      puts result.body
+      # Crude way to check for text "resource 1 not present"
+      result.body.match(/resource 1/)[0].should == "resource 1"
+    end
   end
 end
