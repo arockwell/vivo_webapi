@@ -30,9 +30,9 @@ module VivoWebApi
                        { :query => sparql, :resultFormat => format })
       client = SPARQL::Client.new('http://vivo.ufl.edu')
       if format == 'RS_XML'
-        return client.parse_xml_bindings(page.body)
+        return SPARQL::Client.parse_xml_bindings(page.body)
       elsif format == 'RS_JSON'
-        return client.parse_json_bindings(page.body)
+        return SPARQL::Client.parse_json_bindings(page.body)
       end
     end
 
@@ -47,6 +47,16 @@ module VivoWebApi
         end
       end
       return results
+    end
+
+    def merge_individuals(username, password, primary_uri, duplicate_uri)
+      agent = authenticate(username, password)
+      page = agent.get("#{@base_url}/ingest", 
+                       { :action => 'mergeIndividuals',
+                         :uri1 => primary_uri,
+                         :uri2 => duplicate_uri,
+                         :submit => 'Merge individuals' })
+      return page
     end
   end
 end
